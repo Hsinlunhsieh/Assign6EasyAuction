@@ -8,7 +8,9 @@ firebase.initializeApp(config);
 ImageDealer.REF = firebase;
 var currentUser ;
 
-
+var items = new Firebase("https://boiling-inferno-1689.firebaseio.com/items/");
+/*var curr= items.child(nowItem);*/
+var nowItem = "";
 
 /*
     分為三種使用情形：
@@ -33,8 +35,17 @@ $("#signout").click(function () {
 
 });
 
-$("#submitData").click(function () {
+$("#submitData").click(function saveItems(title, price, descrip, pic) {
+items.push({"title":title, "price":parseInt(price), "descrip":descrip, "imgD":pic, "userTime": new Date($.now()).toLocaleString()});
+}
     // 上傳新商品
+    function viewAllItems() {
+items.on("value",readItems);
+}
+
+function showAllItems() {
+items.on("value",readItems);
+}
 });
 
 $("#editData").click(function () {
